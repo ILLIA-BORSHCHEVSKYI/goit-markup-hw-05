@@ -11,6 +11,8 @@
 --secondary-font: 'Raleway', sans-serif;
     /* Icons */
 --main-icon-cl: #AFB1B8;
+/* Animation */
+--main-anim-cfg: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* global settings */
@@ -141,6 +143,8 @@ ul {
     padding-top: 32px;
     padding-bottom: 32px;
     align-items: center;
+    position: relative;
+    transition: color var(--main-anim-cfg);
 }
 
 .header-link:hover,
@@ -152,6 +156,17 @@ ul {
     color: var(--accent-cl)
 }
 
+.header-link.active::after {
+    content: '';
+    width: 100%;
+    height: 4px;
+    background-color: var(--accent-cl);
+    border-radius: 2px;
+    position: absolute;
+    bottom: -1.5%;
+    left: 0;
+}
+
 .contacts {
     color: var(--secondary-txt-cl)
 }
@@ -159,6 +174,7 @@ ul {
 .header-link .icon {
     fill: var(--main-icon-cl);
     margin-right: 10px;
+    transition: fill var(--main-anim-cfg);
 }
 
 .header-link:hover .icon-tel,
@@ -219,12 +235,13 @@ ul {
     margin-left: auto;
     margin-right: auto;
     display: block;
+    cursor: pointer;
     border: none;
+    transition: background-color var(--main-anim-cfg);
 }
 
 .hero-button:hover,
 .hero-button:focus {
-    cursor: pointer;
     background-color: #188CE8;
 }
 
@@ -292,11 +309,34 @@ ul {
 
 .activity-item {
     margin-right: 30px;
+    position: relative;
 }
 
 .activity-item:last-child {
     margin-right: 0;
 }
+
+.activity-overlay {
+    width: 370px;
+    height: 70px;
+    background-color: rgba(47, 48, 58, 0.8);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.activity-subtitle {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.14;
+    text-align: center;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--main-bg-cl);
+    text-align: center;
+    padding-top: 27px;
+}
+
 
 /* Teammates */
 
@@ -368,12 +408,14 @@ ul {
     background-color: var(--main-bg-cl);
     border-radius: 50%; 
     cursor: pointer;
+    transition: background-color var(--main-anim-cfg);
 }
 
 .network-icon {
     width: 20px;
     height: 20px;
-    fill: var(--main-icon-cl)
+    fill: var(--main-icon-cl);
+    transition: fill var(--main-anim-cfg);
 }
 
 .network-link:hover,
@@ -415,16 +457,17 @@ ul {
     align-items: center;
     border: 1px solid var(--main-icon-cl);
     border-radius: 4px;
+    transition: border var(--main-anim-cfg);
 }
 
 .clients-link:hover,
 .clients-link:focus {
     border: 1px solid var(--accent-cl);
-    border-radius: 4px;
 }
 
 .clients-icon {
     fill: var(--main-icon-cl);
+    transition: fill var(--main-anim-cfg);
 }
 
 .clients-link:hover .clients-icon,
@@ -455,6 +498,7 @@ ul {
     line-height: 1.71;
     color: rgba(255, 255, 255, 0.6);
     font-style: normal;
+    transition: color var(--main-anim-cfg);
 }
 
 .address-item {
@@ -475,6 +519,7 @@ ul {
     line-height: 1.71;
     color: var(--main-bg-cl);
     font-style: normal;
+    transition: color var(--main-anim-cfg);
 }
 
 .contacts-address {
@@ -520,6 +565,7 @@ ul {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 50%; 
     cursor: pointer;
+    transition: background-color var(--main-anim-cfg);
 }
 
 .footer-network-icon {
@@ -561,6 +607,7 @@ ul {
     font-family: inherit;
     letter-spacing: 0.03em;
     padding: 6px 25px;
+    transition: background-color var(--main-anim-cfg), color var(--main-anim-cfg), box-shadow var(--main-anim-cfg);
 }
 
 .filter-btn:hover,
@@ -604,6 +651,7 @@ ul {
 
 .portfolio-link {
     display: block;
+    transition: box-shadow var(--main-anim-cfg);
 }
 
 .portfolio-link:hover,
@@ -630,9 +678,95 @@ ul {
     letter-spacing: 0.03em;
 }
 
+.portfolio-thumb {
+    position: relative;
+    overflow: hidden;
+}
+
 .portfolio-container {
     padding: 20px 24px;
     border-right: 1px solid #EEEEEE;
     border-left: 1px solid #EEEEEE;
     border-bottom: 1px solid #EEEEEE;
 }
+
+.portfolio-overlay {
+    width: 370px;
+    height: 294px;
+    background-color: rgba(33, 150, 243, 0.9);;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translatey(100%);
+    transition: transform var(--main-anim-cfg);
+}
+
+.portfolio-link:hover .portfolio-overlay {
+    transform: translatey(0);
+}
+
+.overlay-txt {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.56;
+    letter-spacing: 0.03em;
+    color: var(--main-bg-cl);
+    padding: 63px 24px;
+}
+
+/* Modal window */
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 250ms cubic-bezier(0.39, 1.03, 0.82, 0.08), visibility 250ms cubic-bezier(0.39, 1.03, 0.82, 0.08);
+}
+
+.backdrop.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.backdrop.is-hidden .modal {
+    transform: translate(-50%, -50%) scale(2, 0.1) translatey(-100%);
+    transition: transform 500ms cubic-bezier(0.39, 1.03, 0.82, 0.08);
+
+}
+
+.modal {
+    width: 528px;
+    height: 581px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: var(--main-bg-cl);
+    box-shadow: 
+    0px 1px 3px rgba(0, 0, 0, 0.12), 
+    0px 1px 1px rgba(0, 0, 0, 0.14), 
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    transform: translate(-50%, -50%) scale(1) translatey(0);
+    transition: transform 500ms cubic-bezier(0.39, 1.03, 0.82, 0.08);
+}
+
+.modal-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: var(--main-bg-cl);
+    cursor: pointer;
